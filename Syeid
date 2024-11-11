@@ -1,0 +1,87 @@
+class PriorityQueueSorted:
+    def __init__(self):
+        self.queue = []
+
+    def is_empty(self):
+        """Check if the queue is empty."""
+        return len(self.queue) == 0
+
+    def __len__(self):
+        """Return the length of the queue."""
+        return len(self.queue)
+
+    def remove(self):
+        """Remove the element with the highest priority (front element)."""
+        if not self.is_empty():
+            return self.queue.pop(0)
+        else:
+            print("Queue is empty, cannot remove an element.")
+
+    def peek(self):
+        """Return the element with the highest priority without removing it."""
+        if not self.is_empty():
+            print(f"Peek: {self.queue[0]}")
+            return self.queue[0]
+        else:
+            print("Queue is empty, nothing to peek.")
+
+    def add(self, name, priority):
+        """Add an element to the queue and sort the queue based on priority (highest to lowest)."""
+        self.queue.append((name, priority))
+        self.queue = self.merge_sort(self.queue)
+
+    def print_all(self):
+        """Print all elements in the queue from highest to lowest priority."""
+        print("Queue content:", self.queue)
+        return self.queue
+
+    def merge_sort(self, queue):
+        """Sort the queue using merge sort based on priority (highest to lowest)."""
+        if len(queue) <= 1:
+            return queue
+
+        mid = len(queue) // 2
+        left_half = self.merge_sort(queue[:mid])
+        right_half = self.merge_sort(queue[mid:])
+
+        return self.merge(left_half, right_half)
+
+    def merge(self, left, right):
+        """Merge two halves in sorted order based on priority."""
+        sorted_list = []
+        while left and right:
+            if left[0][1] > right[0][1]:  # Compare priorities
+                sorted_list.append(left.pop(0))
+            else:
+                sorted_list.append(right.pop(0))
+        sorted_list.extend(left if left else right)
+        return sorted_list
+
+
+# Test case
+myQueue = PriorityQueueSorted()
+
+myQueue.add('Gian', 2)
+myQueue.add('Kezia', 8)
+myQueue.print_all()
+
+myQueue.peek()
+
+myQueue.add('Glen', 5)
+myQueue.add('Christo', 9)
+myQueue.print_all()
+
+myQueue.peek()
+
+print("========REMOVE========")
+myQueue.remove()
+myQueue.print_all()
+
+myQueue.remove()
+myQueue.print_all()
+
+myQueue.remove()
+myQueue.print_all()
+
+myQueue.add('Saya', 7)
+myQueue.print_all()
