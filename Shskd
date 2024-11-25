@@ -1,0 +1,61 @@
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.children = []
+
+def generate_tree(number):
+    # Implementasi generate_tree yang sesuai dengan kebutuhan
+    # Fungsi ini hanya sebagai placeholder
+    # Anda harus mengimplementasikan logika untuk membangun tree sesuai dengan 'number'
+    pass
+
+def plus_minus(root):
+    if root is None:
+        return 0
+
+    total = 0
+
+    # Fungsi rekursif untuk menjelajahi tree
+    def traverse(node):
+        nonlocal total
+        total += node.data if node.data % 2 == 0 else -node.data
+        for child in node.children:
+            traverse(child)
+
+    traverse(root)
+    return total
+
+def find_deepest_leaf(root):
+    if root is None:
+        return 0
+
+    max_depth = 0
+
+    # Fungsi rekursif untuk menemukan leaf terdalam
+    def traverse(node, depth):
+        nonlocal max_depth
+        if not node.children:  # Jika node adalah leaf
+            max_depth = max(max_depth, depth)
+        for child in node.children:
+            traverse(child, depth + 1)
+
+    traverse(root, 0)
+    return max_depth
+
+# Test case
+if __name__ == "__main__":
+    root = generate_tree(840)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(1200)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(8440)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+    print()
+    root = generate_tree(53)
+    print(f"hasil plus minus = {plus_minus(root)}")
+    print(f"leaf paling dalam = {find_deepest_leaf(root)}")
