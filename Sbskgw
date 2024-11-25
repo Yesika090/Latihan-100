@@ -1,0 +1,35 @@
+# main.py
+
+class Node:
+    def __init__(self, data):
+        self.left = None
+        self.right = None
+        self.data = data
+
+def generate_tree(number):
+    # This function is already given and generates a tree based on the number
+    # ... (implementation not shown)
+
+def plus_minus(root):
+    if root is None:
+        return 0
+    
+    # Alternate between adding and subtracting based on node data
+    result = root.data if root.data % 2 == 0 else -root.data
+    result += plus_minus(root.left)
+    result -= plus_minus(root.right)  # Subtracting right subtree to alternate
+    return result
+
+def find_deepest_leaf(root, depth=0):
+    if root is None:
+        return depth
+    
+    left_depth = find_deepest_leaf(root.left, depth + 1)
+    right_depth = find_deepest_leaf(root.right, depth + 1)
+    return max(left_depth, right_depth)
+
+# Test cases
+root = generate_tree(840)
+print(f"hasil plus minus = {plus_minus(root)}")
+print(f"leaf paling dalam = {find_deepest_leaf(root)}")
+# ... other test cases
